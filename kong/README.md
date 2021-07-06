@@ -1,10 +1,12 @@
 # Kong
 
-# Installation
-````bash
-make build
-```
+## API Gateway
 
-```bash
-make setup
-```
+## Pourquoi Kong ? 
+
+## Kong Archi
+![](kong.png)
+
+
+## Kong OIDC
+![](kong_oidc.png)
