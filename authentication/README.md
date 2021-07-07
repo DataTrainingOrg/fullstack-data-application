@@ -1,9 +1,17 @@
 # SSO
 
-## Qu'est ce que c'est ? 
+## Qu'est ce que c'est ?
+
 ## Keycloak pourquoi ?
+
 ## Client <> Users
-### Clients 
+
+### Clients
+
+### Utilisateurs
+
 ## OIDC ? 
+
+Open ID Connect
+
 ## Exemple de France Connect
-## 

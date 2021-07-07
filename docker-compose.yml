@@ -56,13 +56,13 @@ services:
       ports:
       - "8080:8080"
 
-  nginx:
+  front:
     build:
-      context: proxy
+      context: front
       dockerfile: Dockerfile
     volumes:
       - ./front/dist/:/etc/nginx/html/dist/
-      - ./proxy/data/nginx/:/etc/nginx/conf.d
+      - ./front/data/nginx/:/etc/nginx/conf.d
     networks:
       - default
     ports:
