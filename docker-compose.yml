@@ -59,7 +59,7 @@ services:
   front:
     build:
       context: front
-      dockerfile: Dockerfile
+      dockerfile: front/Dockerfile.nginx
     volumes:
       - ./front/dist/:/etc/nginx/html/dist/
       - ./front/data/nginx/:/etc/nginx/conf.d
