@@ -5,6 +5,7 @@
 Pourquoi créer une API
 
 ## Différents types
+
 ### REST
 
 REST est un ensemble de contraintes architecturales. Il ne s'agit ni d'un protocole, ni d'une norme. Les développeurs d'API peuvent mettre en œuvre REST de nombreuses manières.
@@ -27,12 +28,13 @@ Une API RESTful doit remplir les critères suivants :
     - Du code à la demande (facultatif), c'est-à-dire la possibilité d'envoyer du code exécutable depuis le serveur vers le client (lorsqu'il le demande) afin d'étendre les fonctionnalités d'un client 
 
 Bien que l'API REST doive répondre à l'ensemble de ces critères, elle est considérée comme étant plus simple à utiliser qu'un protocole tel que SOAP (Simple Object Access Protocol), qui est soumis à des contraintes spécifiques, dont la messagerie XML, la sécurité intégrée et la conformité des transactions, ce qui le rend plus lourd et moins rapide.
- 
+
 ### WebSocket
+
 L'API WebSocket est une technologie évoluée qui permet d'ouvrir un canal de communication bidirectionnelle entre un navigateur (côté client) et un serveur. Avec cette API vous pouvez envoyer des messages à un serveur et recevoir ses réponses de manière événementielle sans avoir à aller consulter le serveur pour obtenir une réponse.
 
-
 ## FastAPI
+
 Asynchrone
 REST + WebSocket
 Autodocumentation
@@ -48,3 +50,7 @@ Autodocumentation
 ### Les différences ?
 
 ### Exemples de codes
+
+## [Architecture](ARCHITECURE.md)
+
+## [Metier][METIER.md]
