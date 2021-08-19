@@ -38,6 +38,10 @@ app.add_route("/metrics", handle_metrics)
 async def startup_event():
     BaseSQL.metadata.create_all(bind=engine)
 
+@app.get("/api/headers")
+def read_hello(request: Request, x_userinfo: Optional[str] = Header(None, convert_underscores=True), ):
+    print(request["headers"])
+    return {"Headers": json.loads(base64.b64decode(x_userinfo))}
 
 @app.get("/")
 def read_root():
