@@ -1,0 +1,22 @@
+version: "3.4"
+
+services:
+  keycloak-db:
+      image: postgres
+      env_file:
+        - authentication/.env
+      networks:
+        - default
+      ports:
+        - "25432:5432"
+
+  keycloak:
+      build:
+        context: authentication
+        dockerfile: Dockerfile
+      env_file:
+        - authentication/.env
+      networks:
+        - default
+      ports:
+      - "8080:8080"

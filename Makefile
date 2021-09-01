@@ -21,3 +21,7 @@ down:
 
 logs:
 	docker-compose -f docker-compose.yml logs --follow
+
+
+run-kong-auth:
+	docker-compose -f docker-compose.kong.auth.yml up -d
