@@ -19,7 +19,6 @@ RUN pip install -r requirements.txt
 COPY ./app /app/app
 ```
 
-
 ``` bash
 docker build -t <image_name>  .
 ```
