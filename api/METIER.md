@@ -1,4 +1,0 @@
-# Metier
-
-Les concepts métiers
-

@@ -9,8 +9,8 @@ from .models import BaseSQL, engine
 from . import routers
 
 app = FastAPI(
-    title="Admin Moteur backend",
-    description="Admin moteur",
+    title="My title",
+    description="My description",
     version="0.0.1",
 )
 origins = [

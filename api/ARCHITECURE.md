@@ -2,58 +2,67 @@
 
 Structuration d'une API
 
-
 ### Les méthodes
 
-- GET
-- POST
-- PUT
-- DELETE
+Les méthodes sont comme la grammaire de communication d'une API avec le reste du monde.  Lorsque l'on communique avec quelqu'un et qu'on souhaite recevoir quelque chose de cette personne, il faut précisier si on a besoin d'une information, qu'on veut lui transmettre quelque chose ou revenir sur ce qu'on s'est dit précédemment. 
+Les méthodes nous permettent de faire cela avec les APIs:  
 
-### Les codes HTTP
-#### Les succés
-- 200 : OK - Requête traitée avec succès. La réponse dépendra de la méthode de requête utilisée. 
-- 201 : CREATED - Requête traitée avec succès et création d’un document. 
-- 202 : ACCEPTED - Requête traitée, mais sans garantie de résultat. 
+- GET : permet de demander une ressource au serveur
+- POST : permet d'envoyer et (souvent) de créer une ressource coté serveur
+- PUT/PATCH: permettent de modifier tout ou partie d'une ressource
+- DELETE : permet de supprimer une ressource
 
-Ces codes de succès peuvent être utilisés dans plusieurs cas différents. Pour la création d'un objet, sa mise à jour ou même le succès de sa suppression. 
-Ces codes sont là pour communiquer de façon simple avec l'exterieur, ils permettent de savoir très rapidement si l'action qui vient d'être demandé à été exécuté avec succès. 
-
-#### Les erreurs
-	
-- 400 : Bad Request - La syntaxe de la requête est erronée.
-Par exemple il manque des données dans le formulaire, le schéma après sa validation va renvoyer directement une erreur 400 car les données sont éronées. 
-- 401 : Unauthorized - Une authentification est nécessaire pour accéder à la ressource.
-Si l'utilisateur essaye d'accéder à une ressource sans être connecté. 
-- 402 : Payment Required - Paiement requis pour accéder à la ressource.
-Si l'utilisateur essaye d'accéder à une ressource payant de votre application
-- 403 : Forbidden - Le serveur a compris la requête, mais refuse de l'exécuter.
-Si l'utilisateur essaye d'accéder à une ressource qu'il n'a pas le droit de modifier ou de consulter.
-- 404 : Not Found -	Ressource non trouvée.
-Cette erreur est la plus connue, elle permet de déterminer qu'une ressource n'est pas disponible, cela peut arriver pour plusieurs raisons. La page demandée n'existe pas ou à été supprimée, l'item demandé peut être en rupture ou plus disponible sur un site e-commerce.  
-- 405 : Method Not Allowed - Méthode de requête non autorisée. 
-Quand on essaye de réaliser une méthode spécifique qui n'est pas autorisée. Par exemple un DELETE sur une route qui n'accepte que les GET ou les POST, le serveur renverra une erreur 405. Le serveur accepte les demandes à cette adresse mais pas ce type de demandes. 
-- 408 :	Request Time-out - Temps d’attente d’une requête du client, écoulé côté serveur.
-- 409 : Conflict - La requête ne peut être traitée en l’état actuel. 
-Ces erreurs peuvent survenir quand un item existe déjà par exemple. 
-
-Avec FastAPI c'est très simple de renvoyer une erreur spécifique en fonction de ce que l'on souhaite communiquer. Il suffit de raise une erreur Python avec le code et le détail. 
+FastAPI met à disposition des décorateurs qui permettent de définir ces méthodes.
 
 ```python
-from fastapi import HTTPException
-
-already_exists = True 
-
-if already_exists:
-    raise HTTPException(status_code=409, detail="Already exists")
-else:
-    raise HTTPException(status_code=404, detail="Not Found")
+@router.get("/{id}", tags=["posts"])
+@router.post("/", tags=["posts"])
+@router.put("/{id}", tags=["posts"])
+@router.delete("/{id}", tags=["posts"])
 ```
 
-https://fastapi.tiangolo.com/tutorial/handling-errors/
+La combinaison de ces méthodes avec le path des routes vers celles-ci permettent de structurer une API. 
+
+### Path
+
+Le path est le chemin qui permet d'accéder à une ressource. Il est très important de bien structurer ce chemin d'accés pour garder une certaine cohérence et compréhension du fonctionnement. 
+
+Dans FastAPI c'est très simple il suffit de définir pour chaque méthode vu plus haut, la string permettant d'accéder aux ressources.
+
+```python
+@router.get("/users", tags=["users"])
+```
+
+permettrait de récupérer l'ensemble des utilisateurs.
+
+```python
+@router.get("/user/{user_id}")
+```
+
+permettrait de récupérer l'utilisateur spécifique correspondant à l'id. 
+
+```python
+@router.get("/user/{user_id}/posts/", tags=["posts"])
+```
+
+permettrait de récupérer l'ensemble des posts d'un utilisateur.
+Et si on combine avec la méthode POST
+
+
+```python
+@router.post("/user/{user_id}/posts", tags=["posts"])
+```
+
+permettrait de créer un nouveau post pour cet utilisateur.
+
+Ce chemin est équivalent au chemin utilisé par le navigateur web pour naviguer sur un site web. 
+
+- https://www.lemonde.fr/ : La page de garde
+- https://www.lemonde.fr/economie-mondiale/ : On accède à une catégorie spécifique du site. 
+- https://www.lemonde.fr/argent/article/2021/09/06/bourse-est-ce-le-moment-d-investir-sur-les-marches-emergents-notamment-chinois_6093537_1657007.html : on accède à un a un article spécifique dans une catégorie déterminée. 
 
 ## Routes
-Les routes représente la structure globale de l'api. Elles définissent l'interface de communication et l'interface d'interaction avec votre application. 
+Les routes représente la structure globale de l'api. Elles définissent l'interface de communication et l'interface d'interaction avec votre application. Ces routes utilisent les deux concepts vu plus haut, c'est la combinaisaon d'un chemin et d'une méthode.  
 
 Très souvent on peut retrouver des routes de base qui répondent au principe CRUD. 
 
@@ -63,45 +72,42 @@ C'est un moyen mnémotechnique pour les quatre fonctions de base du stockage per
 Ici on peut définir les routes permettant de réaliser ces opérations CRUD sur nos Posts.
 
 ```python
-from fastapi import APIRouter, Depends
-from ..services import posts as posts_service
-from .. import schemas, models
-from sqlalchemy.orm import Session
-
-router = APIRouter(prefix="/posts")
-
-
-@router.post("/", tags=["posts"])
-async def create_post(post: schemas.Post, db: Session = Depends(models.get_db)):
-    return posts_service.create_post(post=post, db=db)
-
-
-@router.get("/{post_id}", tags=["posts"])
-async def get_post_by_id(post_id: str, db: Session = Depends(models.get_db)):
-    return posts_service.get_post_by_id(post_id=post_id, db=db)
-
-
-@router.put("/{post_id}", tags=["posts"])
-async def update_post_by_id(post_id: str, post: schemas.Post,
-                            db: Session = Depends(models.get_db)):
-    return posts_service.update_post(post_id=post_id, db=db, post=post)
-
-
-@router.delete("/{post_id}", tags=["posts"])
-async def delete_post_by_id(post_id: str, db: Session = Depends(models.get_db)):
-    return posts_service.delete_post(post_id=post_id, db=db)
+@router.post("/posts", tags=["posts"])
+async def create_post(**kwargs):
+   pass  
 ```
-
-On peut remarquer l'utilisation des méthodes vues plus haut. Par exemple le delete dans ce cas. 
+Permet de créer un nouveau post grâce à la méthode POST
 
 ```python
-from fastapi import APIRouter
-
-router = APIRouter(prefix="/posts")
-@router.delete("/{post_id}", tags=["posts"])
-def delete_post(post_id: str):
+@router.get("/posts", tags=["posts"])
+async def get_posts(**kwargs):
     pass
 ```
+
+Ici on utilise la méthode GET sur le même path qui nous permet de récupérer l'ensemble des posts.
+
+```python
+@router.get("/posts/{post_id}", tags=["posts"])
+async def get_post_by_id(post_id: str, **kwargs):
+    pass
+```
+
+Permet de récupérer le post précédemment créé grace à son id. Vous voyez aussi, que le template du path permet de récupérer l'id du post dans les paramètres de la fonction, et donc de l'utiliser directement dans le code. 
+```python
+@router.put("/posts/{post_id}", tags=["posts"])
+async def update_post_by_id(post_id: str, **kwargs):
+    pass
+```
+
+Permet de mettre à jour un post grâce son id.
+
+```python
+@router.delete("/{post_id}", tags=["posts"])
+async def delete_post_by_id(post_id: str, **kwargs):
+    pass
+```
+
+Et ici de le supprimer.
 
 ## La gestion des données
 
@@ -264,6 +270,48 @@ def create_post(db: Session, post: schemas.Post) -> models.Post:
 On peut remarquer qu'ici l'entrée du service sera le schéma du Post envoyé par l'utilisateur. Ici le service récupère donc un objet Post déjà validé, propre et prêt à être utilisé. 
 
 
+### Les codes HTTP
+#### Les succés
+- 200 : OK - Requête traitée avec succès. La réponse dépendra de la méthode de requête utilisée. 
+- 201 : CREATED - Requête traitée avec succès et création d’un document. 
+- 202 : ACCEPTED - Requête traitée, mais sans garantie de résultat. 
+
+Ces codes de succès peuvent être utilisés dans plusieurs cas différents. Pour la création d'un objet, sa mise à jour ou même le succès de sa suppression. 
+Ces codes sont là pour communiquer de façon simple avec l'exterieur, ils permettent de savoir très rapidement si l'action qui vient d'être demandé à été exécuté avec succès. 
+
+#### Les erreurs
+	
+- 400 : Bad Request - La syntaxe de la requête est erronée.
+Par exemple il manque des données dans le formulaire, le schéma après sa validation va renvoyer directement une erreur 400 car les données sont éronées. 
+- 401 : Unauthorized - Une authentification est nécessaire pour accéder à la ressource.
+Si l'utilisateur essaye d'accéder à une ressource sans être connecté. 
+- 402 : Payment Required - Paiement requis pour accéder à la ressource.
+Si l'utilisateur essaye d'accéder à une ressource payant de votre application
+- 403 : Forbidden - Le serveur a compris la requête, mais refuse de l'exécuter.
+Si l'utilisateur essaye d'accéder à une ressource qu'il n'a pas le droit de modifier ou de consulter.
+- 404 : Not Found -	Ressource non trouvée.
+Cette erreur est la plus connue, elle permet de déterminer qu'une ressource n'est pas disponible, cela peut arriver pour plusieurs raisons. La page demandée n'existe pas ou à été supprimée, l'item demandé peut être en rupture ou plus disponible sur un site e-commerce.  
+- 405 : Method Not Allowed - Méthode de requête non autorisée. 
+Quand on essaye de réaliser une méthode spécifique qui n'est pas autorisée. Par exemple un DELETE sur une route qui n'accepte que les GET ou les POST, le serveur renverra une erreur 405. Le serveur accepte les demandes à cette adresse mais pas ce type de demandes. 
+- 408 :	Request Time-out - Temps d’attente d’une requête du client, écoulé côté serveur.
+- 409 : Conflict - La requête ne peut être traitée en l’état actuel. 
+Ces erreurs peuvent survenir quand un item existe déjà par exemple. 
+
+Avec FastAPI c'est très simple de renvoyer une erreur spécifique en fonction de ce que l'on souhaite communiquer. Il suffit de raise une erreur Python avec le code et le détail. 
+
+```python
+from fastapi import HTTPException
+
+already_exists = True 
+
+if already_exists:
+    raise HTTPException(status_code=409, detail="Already exists")
+else:
+    raise HTTPException(status_code=404, detail="Not Found")
+```
+
+https://fastapi.tiangolo.com/tutorial/handling-errors/
+
 ### Middlewares
 
 https://fastapi.tiangolo.com/tutorial/middleware/
@@ -274,5 +322,3 @@ Les Middlewares sont des briques logicielles utilisées pour effectuer des opér
 
 https://fastapi.tiangolo.com/tutorial/background-tasks/
 Les backgrounds tasks permettent de réaliser des tâches gourmandes en ressources qui peuvent attendre.
-
- 
