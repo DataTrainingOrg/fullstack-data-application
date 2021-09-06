@@ -10,5 +10,5 @@ Le but de ce TP est d'utiliser tout ce que vous avez vu en cours pour créer vot
 5. Ajouter les routes CRUDs permettant de créer, modifier, supprimer un objet de votre choix
 6. Créer des services permettant de réaliser toutes ces opérations
 7. Remplacer le code dans les routes pour utiliser directement les services
-
+8. Ajouter une route permettant de lire un header, realiser une requête sur votre API via votre navigateur préféré et renvoyer le header correspondant
  

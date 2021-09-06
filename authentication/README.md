@@ -45,7 +45,7 @@ Keycloak inclut notamment les fonctionnalités suivantes :
 
 Keycloak propose plusieurs concepts de base qu'il faut bien différencier. Les clients et les utilisateurs. 
 
-### U
+### Utilisateurs
 
 Les utilistateurs sont des personnes physiques souhaitant se connecter à une application. Lorsqu'ils vont tenter de se connecter à un site web, le site va directement renvoyer vers Keycloak afin de gérer la partie authentification. 
 
@@ -82,7 +82,7 @@ OpenID Connect est une simple couche d'identification basée sur le protocole OA
 
 OpenID Connect permet à un éventail de clients, y compris web, mobiles et JavaScript, de demander et recevoir des informations sur la session authentifiée et l'utilisateur final. Cet ensemble de spécifications est extensible, supporte des fonctionnalités optionnelles telle le chiffrement des données d'identité, la découverte dynamique de fournisseurs OpenID et la gestion de sessions2.
 
-![test](identity_broker_flow)
+![test](identity_broker_flow.png)
 
 ## Exemple de France Connect
 

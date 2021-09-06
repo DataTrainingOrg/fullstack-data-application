@@ -1,4 +1,4 @@
-# Authentication TP
+# TP Authentification
 
 ## Run Front
 ```bash

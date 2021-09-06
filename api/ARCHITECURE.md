@@ -270,6 +270,28 @@ def create_post(db: Session, post: schemas.Post) -> models.Post:
 On peut remarquer qu'ici l'entrée du service sera le schéma du Post envoyé par l'utilisateur. Ici le service récupère donc un objet Post déjà validé, propre et prêt à être utilisé. 
 
 
+### Headers
+
+Les headers sont des informations complémentaires envoyés par le protocol http. Votre navigateur envoie des informations au serveur du site duquel vous essayez d'accéder.  Si vous allez dans la console de Google Chrome et que vous allez dans l'onglet Network vous pouvez choisir une requête réalisée par votre navigateur. Vous pouvez ensuite regarder dans les headers, vous verez que Chrome envoie un nombre incalculable d'autres informations. Cela permet au site de réagir de la meilleure manière.
+
+Pour récupérer ces headers dans FastAPI c'est très simple, vous ajoutez un paramètre à la  fonction de votre route. FastAPI va se charger d'aller chercher ce header directement pour vous.  
+
+```python
+
+@app.get("/api/headers")
+def read_headers(x_userinfo: Optional[str] = Header(None), ):
+    pass
+```
+
+Souvent les headers possèdent des tirets, pour que Python puisse utiliser cette variable il faut juste lui préciser de transformer ces tirets en underscores.
+```python
+
+@app.get("/api/headers")
+def read_headers(x_userinfo: Optional[str] = Header(None,  convert_underscores=True), ):
+    pass
+```
+
+
 ### Les codes HTTP
 #### Les succés
 - 200 : OK - Requête traitée avec succès. La réponse dépendra de la méthode de requête utilisée. 
