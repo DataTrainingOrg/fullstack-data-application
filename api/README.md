@@ -4,6 +4,8 @@
 
 Pourquoi créer une API
 
+![test](../docs/modern_web_app.png)
+
 ## Différents types
 
 - REST
