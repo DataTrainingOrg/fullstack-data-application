@@ -4,7 +4,7 @@ services:
   keycloak-db:
       image: postgres
       env_file:
-        - authentication/.env
+        - .env
       networks:
         - default
       ports:
@@ -12,10 +12,10 @@ services:
 
   keycloak:
       build:
-        context: authentication
+        context: .
         dockerfile: Dockerfile
       env_file:
-        - authentication/.env
+        - .env
       networks:
         - default
       ports:

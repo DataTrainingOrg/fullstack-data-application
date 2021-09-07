@@ -86,6 +86,6 @@ OpenID Connect permet à un éventail de clients, y compris web, mobiles et Java
 
 ## Exemple de France Connect
 
-L'insee à notamment développé un package permettant aux utilisateurs de Keycloak d'utiliser la brique France connect pour s'authentifier. 
+L'insee à notamment développé un package permettant aux utilisateurs de Keycloak d'utiliser la brique France connect pour s'authentifier.
 
 https://github.com/InseeFr/Keycloak-FranceConnect

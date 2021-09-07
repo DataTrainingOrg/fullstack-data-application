@@ -1,6 +1,6 @@
 # Data FullStack Application
 
-![test](../docs/modern_web_app.png)
+![FullStack](docs/modern_web_app_with_auth.png)
 
 Pour commencer :
 
