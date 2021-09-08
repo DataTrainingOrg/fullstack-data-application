@@ -65,4 +65,8 @@ l'option `-it ` permet de prendre la main sur le terminal de l'instance. En l'en
 
 Docker compose permet de gérer l'ensemble d'une application. Elle permet de mettre en relation plusieurs définition d'images et donc de conteneurs. 
 
-Le fichier `docker-compose.yml` permet de définir, 
+Le fichier `docker-compose.yml` permet de définir, l'ensemble des services et les relier entre eux.
+
+## Exercices
+
+Réaliser les commandes vu précédemment pour lancer flask directement dans Docker.
