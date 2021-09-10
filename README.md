@@ -4,7 +4,7 @@
 
 Pour commencer :
 
-## [Docker](DOCKER.md)
+## [Docker](docker/DOCKER.md)
 
 Pour l'ensemble des parties du cours
 
