@@ -14,6 +14,10 @@
     - [Infrastructure mutable](#infrastructure-mutable)
     - [Infrastructure immuable](#infrastructure-immuable)
     - [Deuxième conclusion](#deuxième-conclusion)
+  - [Horizontal and vertical scaling](#horizontal-and-vertical-scaling)
+    - [Scaling vertical](#scaling-vertical)
+    - [Scaling horizontal](#scaling-horizontal)
+    - [Troisième conclusion](#troisième-conclusion)
 
 ## Histoire du déploiement
 
@@ -79,3 +83,16 @@ Avec le cloud à grande échelle, l'approche immuable est préférée, voire par
 
 Les conteneurs sont simples et rapides à livrer, lancer et disposer. Combinés avec un orchestrateur tel que Kubernetes, ils sont capables de répondre aux problématiques du cloud.
 
+## Horizontal and vertical scaling
+
+### Scaling vertical
+
+Cela signifie que pour répondre à une augmentation croissante du trafic d'une application, en terme de nombre d'utilisateurs, la réponse est d'augmenter les ressources de la machine qui héberge l'application. Par exemple, en augmentant le nombre de CPUs, en ajoutant de la RAM et du stockage. C'est une solution simple, en particulier avec une architecture muable. Un défaut majeur est que les ressources nouvellement attribuées ne sont pas simples à récupérer tant que la machine est en marche, et selon l'application, il n'est pas garanti qu'ajouter des ressources aide.
+
+### Scaling horizontal
+
+Cette approche va répondre à une demande croissante en ajoutant des machines qui hébergent une même application, avec combiné à cela une redirection du trafic afin qu'il soit réparti parmi les machines de la flotte. Une fois que le trafic retourne à la normale, la pratique est de supprimer les machines supplémentaires afin de redistribuer les ressources à la pool commune.
+
+### Troisième conclusion
+
+Quand l'application le permet, la pratique répandue est le scaling horizontal, qui est particulièrement bien adapté à une infrastructure immuable. Toutefois, s'il ne suffit pas, il est envisageable d'augmenter les ressources des machines créées puis de les déployer horizontalement.
