@@ -34,6 +34,6 @@ services:
     command: server /data
 ```
 
-
-
 ## Utilisation 
+
+Comme expliqué plus haut, Minio permet de stocker et de gérer des médias. 
