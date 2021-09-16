@@ -15,6 +15,8 @@
   - [Préparation](#préparation)
     - [JavaScript](#javascript)
     - [NodeJS](#nodejs)
+      - [Environnement de développement](#environnement-de-développement)
+      - [Execution du code](#execution-du-code)
     - [Frameworks](#frameworks-1)
       - [Server-side](#server-side)
       - [Client-side](#client-side)
@@ -131,7 +133,25 @@ Le site de NodeJS offre [documentation](https://nodejs.dev/learn/introduction-to
 
 `yarn` est également un package manager connu créé par Facebook et qui peut être installé [de cette manière](https://classic.yarnpkg.com/en/docs/install#mac-stable). L'installation des packages se fait avec `yarn add package_name`.
 
-1. NodeJS est utilisé pour développer en JavaScript sur son poste local.
+#### Environnement de développement
+
+NodeJS est utilisé pour développer en JavaScript sur son poste local. On peut installer un environnement NodeJS en utilisant Docker:
+1. `docker pull node:alpine`
+2. Depuis le terminal, naviguer dans le répertoire de travail
+3. `docker run -it --name node_dev -v $PWD:/app -w /app node:alpine -p 3000:3000 -p 8080:8080 /bin/sh`
+
+Il est aussi possible aussi d'utiliser un Dockerfile:
+```
+FROM node:alpine
+
+WORKDIR /app
+
+COPY . .
+
+ENTRYPOINT ["/bin/sh"]
+```
+
+#### Execution du code
 
 L'API fetch n'est pas incluse par défaut et il faut l'installer:
 ```
