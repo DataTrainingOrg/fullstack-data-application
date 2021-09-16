@@ -138,6 +138,8 @@ Cela est possible grâce principalement au partage de volume, qui permet de trav
 docker run -it --name python_dev -v $PWD:/app python:3.8-alpine /bin/sh
 ```
 
+Développer directement depuis un conteneur est avantageux, car on ne va pas polluer son ordinateur avec des dépendances. Si l'on rate la configuration de son conteneur, on peut simplement le supprimer et recommencer.
+
 Un tip supplémentaire est d'utiliser l'extension de Visual Studio Code qui s'appelle Remote - Containers. Elle permet d'ouvrir une fenêtre de l'IDE avec les fichiers du conteneur et des terminaux intégrés directement depuis son intérieur.
 
 ## Kubernetes
