@@ -120,10 +120,10 @@ Implémentations principales:
 - variables [const](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const) et [let](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let)
 - [fonction](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions): on note qu'en JS, les arrow fonctions sont souvent utilisées comme versions courtes des fonctions traditionnelles, comme par exemple `() => {}` 
 - [if/else](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling#if...else_statement)
-- [forEach](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach): on note qu'il est préféré au simple `for`
 - [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
 - [map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
 - [object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects#objects_and_properties)
+- méthodes d'array: [map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map), [reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce), [filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter), [forEach](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
 - [callback/closure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions#closures)
 - [undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)
 
