@@ -220,6 +220,43 @@ class Post(BaseSQL):
 
 ```
 
+Pour créer la connexion avec la base de données, il nous faut définir les points d'accès que FastAPI par le biais de SQLAlchemy va utiliser pour `discuter` avec votre base de données. Pour cela il nous faut définir l'URL de connexion ainsi que les paramètres d'authentification. On créé un engine et une session, c'est ce qui nous permettra d'intéragire avec notre BDD.
+
+```python
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+import os 
+
+
+POSTGRES_USER = os.environ.get("POSTGRES_USER")
+POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD")
+POSTGRES_DB = os.environ.get("POSTGRES_DB")
+
+
+SQLALCHEMY_DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@postgres/{POSTGRES_DB}"
+print(SQLALCHEMY_DATABASE_URL)
+
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL
+)
+SessionLocal = sessionmaker(autocommit=False, autoflush=True, bind=engine)
+
+BaseSQL = declarative_base()
+```
+
+Lors de la première synchronisation avec la base de données, SQLAlchemy doit pouvoir créer le schéma de données en base. C'est à dire créer les tables et les colonnes avec les types correspondants. Pour cela nous devons appeler une méthode à l'initiation de FastAPI.
+
+```python
+from .models import BaseSQL
+
+@app.on_event("startup")
+async def startup_event():
+    BaseSQL.metadata.create_all(bind=engine)
+```
+
+Ici on utilise une méthode asynchrone qui est triggered avec un evenement `startup` envoyé par FastAPI à son instanciation. Cette méthode permet donc de créer si il n'existe pas le format de données dans la base de données PostgresSQL dans ce cas.
+
 ### Les services
 
 La structuration sous forme de service permet de décorréler la partie base de données et schemas (donc données brutes) de la partie routes. 
@@ -291,12 +328,11 @@ def read_headers(x_userinfo: Optional[str] = Header(None,  convert_underscores=T
     pass
 ```
 
-
 ### Les codes HTTP
 #### Les succés
 - 200 : OK - Requête traitée avec succès. La réponse dépendra de la méthode de requête utilisée. 
-- 201 : CREATED - Requête traitée avec succès et création d’un document. 
-- 202 : ACCEPTED - Requête traitée, mais sans garantie de résultat. 
+- 201 : CREATED - Requête traitée avec succès et création d’un document.
+- 202 : ACCEPTED - Requête traitée, mais sans garantie de résultat.
 
 Ces codes de succès peuvent être utilisés dans plusieurs cas différents. Pour la création d'un objet, sa mise à jour ou même le succès de sa suppression. 
 Ces codes sont là pour communiquer de façon simple avec l'exterieur, ils permettent de savoir très rapidement si l'action qui vient d'être demandé à été exécuté avec succès. 
