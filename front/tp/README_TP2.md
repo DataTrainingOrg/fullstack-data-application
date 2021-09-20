@@ -2,7 +2,7 @@
 
 On va maintenant pouvoir faire les branchements avec nos APIs que nous avons développé.  
 
-## Avec l"API CRUD 
+## Avec l'API CRUD 
 1. Créer une page de formulaire permettant de faire un POST avec les données pour créer un objet
 2. Créer une page permettant de lister l'ensemble des objets créés dans la base. 
 3. Ajouter un bouton permettant de supprimer un objet. 
