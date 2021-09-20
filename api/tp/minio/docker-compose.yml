@@ -1,0 +1,17 @@
+version: '3.4'
+
+networks:
+  default:
+    driver: bridge
+
+services:
+    minio:
+      container_name: minio
+      image: quay.io/minio/minio
+      ports:
+          - 9000:9000
+          - 9001:9001
+      environment:
+        MINIO_ROOT_USER: root
+        MINIO_ROOT_PASSWORD: rootpassword
+      command: server /data --console-address :9001
