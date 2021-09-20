@@ -34,3 +34,7 @@ On se sert d'une API publique dont la description est ici: https://jsonplacehold
 ### API locale
 
 On se sert de l'API créée lors du dernier TP. Il n'y pas d'exercice en particulier, le but est de réussir à se connecter à cette API et faire des requêtes.
+
+
+## Suite du TP 
+## [TP2](README_TP2.md)
