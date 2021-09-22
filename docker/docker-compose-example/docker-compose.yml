@@ -14,6 +14,7 @@ services:
       context: ./frontend-example
     volumes:
       - ./frontend-example/:/app
+      - /app/node_modules
     ports:
       - "8080:8080"
   db:
@@ -23,3 +24,4 @@ services:
       - .env
     ports:
     - "5432:5432"
+
