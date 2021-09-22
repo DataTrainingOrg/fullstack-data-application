@@ -21,7 +21,7 @@ Le Dockerfile définit l'environnement de l'application:
 - la choix du répertoire de travail: `WORKDIR /app`, `WORKDIR /home`
 - la copie de fichiers locaux vers le futur conteneur: pour copier tout le répertoire local dans le répertoire `WORKDIR` on peut utiliser `COPY . .`, `COPY requirements.txt /app`
 - les variables d'environnement: `ENV NODE_ENV=production`, `ENV PORT=8080`
-- l'exposition d'un seul port: `EXPOSE 8080`
+- l'exposition de ports: `EXPOSE 8080`, `EXPOSE 5000 4000 3000`
 - les commandes à lancer lors du démarrage du conteneur:
   1. la commande par défaut: `ENTRYPOINT ["python"]`
   2. les arguments par défaut: `CMD ["file.py"]`
@@ -127,7 +127,7 @@ version: "3.8"
 services:
   api:
     build:
-      context: ./aapi-example
+      context: ./api-example
     volumes:
       - ./api-example/:/app
     ports:
