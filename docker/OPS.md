@@ -65,7 +65,9 @@ Les conteneurs permettent de packager les applications dans des environnements i
 
 ## Mutable and immutable infrastructures
 
-Les infrastructures mutable et immuable sont aussi connues sous l'expression 'pets vs cattle' - animaux vs troupeau. 
+Les infrastructures mutable et immuable sont aussi connues sous l'expression 'pets vs cattle' - animaux vs troupeau.
+
+![](https://blog.octo.com/wp-content/uploads/2016/12/image01-e1482225268205.png)
 
 ### Infrastructure mutable
 
@@ -84,6 +86,8 @@ Avec le cloud à grande échelle, l'approche immuable est préférée, voire par
 Les conteneurs sont simples et rapides à livrer, lancer et disposer. Combinés avec un orchestrateur tel que Kubernetes, ils sont capables de répondre aux problématiques du cloud.
 
 ## Horizontal and vertical scaling
+
+![](https://www.webairy.com/wp-content/uploads/2019/07/hvsv.jpg)
 
 ### Scaling vertical
 
