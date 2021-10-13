@@ -9,7 +9,7 @@ services:
   #######################################
   # Postgres: The database used by Kong
   #######################################
-  kong-database:
+  kong-db:
     image: postgres:latest
     restart: always
     networks:
@@ -36,9 +36,9 @@ services:
     env_file:
       - .env
     links:
-      - kong-database
+      - kong-db
     depends_on:
-      - kong-database
+      - kong-db
 
   #######################################
   # Kong: The API Gateway
@@ -55,7 +55,7 @@ services:
       KONG_ADMIN_LISTEN: 0.0.0.0:8001
     depends_on:
       - kong-migration
-      - kong-database
+      - kong-db
     healthcheck:
       test: ["CMD", "curl", "-f", "http://kong:8001"]
       interval: 5s
