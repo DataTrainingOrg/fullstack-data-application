@@ -1,0 +1,81 @@
+<!doctype html>
+
+<head>
+	<title>Transporteasy</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<!-- VENDOR CSS -->
+	<link rel="stylesheet" href="static/assets/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="static/assets/vendor/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="static/assets/vendor/linearicons/style.css">
+	<link rel="stylesheet" href="static/assets/vendor/chartist/css/chartist-custom.css">
+	<!-- MAIN CSS -->
+	<link rel="stylesheet" href="static/assets/css/main.css">
+	<link rel="stylesheet" href="static/assets/css/demo.css">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+	<!-- ICONS -->
+	<link rel="apple-touch-icon" sizes="76x76" href="static/assets/img/apple-icon.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="static/assets/img/favicon.png">
+</head>
+
+
+<body>
+	<!-- WRAPPER -->
+	<div id="wrapper">
+
+		<!-- NAVBAR -->
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+				<div id="navbar-menu">
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<br>
+								<i class="lnr lnr-thumbs-up"></i>
+								<span>You like Transporteasy ? Tell your friends ! The more we are the better.</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<br>
+		</nav>
+
+            <!-- LEFT SIDEBAR-->
+		<div id="sidebar-nav" class="sidebar">
+			<div class="sidebar-scroll">
+				<nav>
+					<ul class="nav">
+						<li><a href="/" class=""><i class="lnr lnr-map"></i> <span>Maps</span></a></li>
+						<li><a href="/report" class=""><i class="lnr lnr-warning"></i> <span>Create a report</span></a></li>
+						<li><a href="/profile" class=""><i class="lnr lnr-user"></i> <span>My profile</span></a></li>
+                        <li><a href="/rating" class=""><i class="lnr lnr-star"></i> <span>Rate my trip</span></a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<!--END LEFT SIDEBAR -->
+
+
+	  <!-- MAIN CONTENT -->
+        <div class="main">
+            <div class="main-content">
+                <div class="container mt-5 d-flex justify-content-center">
+                    <div class="card p-3">
+                        <center>
+                        <div class="d-flex align-items-center">
+                                <div class="ml-3 w-100">
+                                    <h1 class="mb-0 mt-0">Hi <strong>{{username}}</strong> !</h1>
+                                    <br>
+                                    <h2 class="mb-0 mt-0">You have {{karmapoints}} karma points</h2>
+                                    <br>
+                                    <h2 class="mb-0 mt-0">You made {{count_reports}} reports</h2>
+                                    <h5>Don't forget that the more you make reports, the more you get karma points.</h5>
+                                </div>
+                        </div>
+                    </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

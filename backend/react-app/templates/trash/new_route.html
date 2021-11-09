@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transporteasy</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" href="static/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="static/assets/vendor/linearicons/style.css">
+    <link rel="stylesheet" href="static/assets/vendor/chartist/css/chartist-custom.css">
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="static/assets/css/main.css">
+    <link rel="stylesheet" href="static/assets/css/demo.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="76x76" href="static/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="static/assets/img/favicon.png">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    
+    <link rel="stylesheet" href="../static/style.css">
+
+</head>
+
+<body>
+    <div class="jumbotron">
+        <div class="container-fluid">
+            <h1>Find Your Route Between Two Places</h1>
+            <p>This App will help you to find the best route</p>
+
+
+
+
+
+
+            <form class="form-signup" id="myform" action ="{{url_for('new_route')}}" name="myform" method="post">
+                <div class="form-label-group">
+                    <label for="from">From</label>
+                    <input id="from" class="form-control" name="from" placeholder="From" required autofocus>
+                </div>
+                <div class="form-label-group">
+                    <label for="to">Password</label>
+                    <input id="to" name="to" class="form-control" placeholder="To" required>
+                </div>
+                <br>
+
+                <br>
+<button class="btn btn-lg btn-primary btn-block" id="submit" name="submit" type="submit"> Find</button>
+                    </div>
+
+
+         
+        </div>
+
+
+        <div class="container-fluid">
+            <div id="googleMap">
+
+            </div>
+            <div id="output">
+
+            </div>
+            <div id="detail">
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+    <script
+        src="{{source}}"></script>
+
+    <script>
+
+
+        //Set map options
+
+        myLatLng = { lat: 45.464664, lng: 9.188540 };
+        var options = {
+            center: myLatLng,
+            zoom: 13,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+        };
+        //create Map
+        var map = new google.maps.Map(document.getElementById("googleMap"), options);
+        var transitLayer = new google.maps.TransitLayer();
+        transitLayer.setMap(map); //print the rest of the public transportation Network 
+
+        //create a direction service object to use the route method and get a answer to our request
+        var directionsService = new google.maps.DirectionsService();
+
+        // create a DirectionsRenderer object which we will use to display the route
+        var directionsDisplay = new google.maps.DirectionsRenderer();
+
+        //bind the directionsRender to the map
+        directionsDisplay.setMap(map);
+        
+        let From = String("{{From}}");
+        let To = String("{{To}}");
+        let locations_array = []
+        let labels_array = []
+        let sorts_array = []
+
+        let i = 0;
+        let j = 0;
+        let k = 0;
+        //locations_array[i] = String("{{locations[index]}}")
+        {% for loc in locations %}
+        locations_array[i] = String("{{loc}}");
+        i++;
+        {% endfor %}
+
+        {% for label in labels %}
+        labels_array[j] = String("{{label}}");
+        j++;
+        {% endfor %}
+        {% for sort in sorts %}
+        sorts_array[k] = String("{{sort}}");
+        k++;
+        {% endfor %}
+
+
+        var markers_array = []
+        var infowindows_array = []
+
+
+        for (let i = 0; i < locations_array.length; i++) {
+
+
+            new google.maps.places.PlacesService(map).getDetails({
+                placeId: String(locations_array[i])
+            }, function (result, status) {
+                if (status != google.maps.places.PlacesServiceStatus.OK) {
+                    alert(status);
+                    return;
+                }
+                console.log(result);
+                var marker = new google.maps.Marker({
+                    map: map,
+                    place: {
+                        placeId: String(locations_array[i]),
+                        location: result.geometry.location
+                    }
+                });
+                markers_array[i] = marker;
+                infowindows_array[i] = new google.maps.InfoWindow();
+
+
+
+                console.log(result.geometry.location.toUrlValue(6));
+                map.setCenter(result.geometry.location);
+                var address = result.adr_address;
+                var newAddr = address.split("</span>,");
+
+                infoWindow.setContent("Problem at time 1");
+                google.maps.event.addListener(infoWindow, 'domready', function () {
+                    map.setCenter(marker.getPosition());
+                });
+                for (let i = 0; i < markers_array.length; i++) {
+                    infowindows_array[i].setContent("<p style='text-align:center;'>" + String(labels_array[i]) + "<br />" + sorts_array[i] + "</p>");
+                    infowindows_array[i].open(map, markers_array[i]);
+                }
+
+            });
+        }
+
+
+   
+
+        //function
+        function calcRoute() {
+            //create request
+
+
+            var request = {
+                origin: From,
+                destination: To,
+                travelMode: google.maps.TravelMode.TRANSIT,//to get ONLY the public transportation in our request 
+                transitOptions: google.maps.TransitOptions,
+                //transitMode: google.maps.TransitMode.SUBWAY,
+                unitSystem: google.maps.UnitSystem.IMPERIAL
+            };
+            var waypoints = [];
+            //Pass the request to the route method
+            directionsService.route(request, (result, status) => {
+                if (status == google.maps.DirectionsStatus.OK) {
+
+                    //get distance and time
+                    const output = document.querySelector('#output');
+                    var distance = result.routes[0].legs[0].distance.text;
+                    var duration = result.routes[0].legs[0].duration.text;
+                    //output.innerHTML = "<div class='alert-info'> From: " + document.getElementById("from").value + ".<br/>To: "+ document.getElementById("to").value + ".<br/> Transit distance: "+distance+ ".<br/>Duration: "+duration+". </div>";
+                    output.innerHTML = "<div class='alert-info'> From: " + From + ".<br/>To: " + To + ".<br/> Transit distance: " + distance + ".<br/>Duration: " + duration + ". </div>";
+
+                    const detail = document.querySelector('#detail');
+                    //console.log(result) to see the result in the console
+                    var departure_station = result.routes[0].legs[0].steps[1].transit.departure_stop.name;
+                    var arrival_station = result.routes[0].legs[0].steps[1].transit.arrival_stop.name;
+                    //detail.innerHTML = "<div class='alert-info-detail'></br>Departure station :"+departure_station+"</br> Arrival station :"+arrival_station;
+
+                    //display route
+                    directionsDisplay.setDirections(result);
+                    
+                    infoWindow = new google.maps.InfoWindow();
+
+                    let locations_array = []
+                    let labels_array = []
+                    let sorts_array = []
+                    
+                    let i = 0;
+                    let j = 0;
+                    let k = 0;
+                    //locations_array[i] = String("{{locations[index]}}")
+                    {% for loc in locations %}
+                    locations_array[i] = String("{{loc}}");
+                    i++;
+                    {% endfor %}
+
+                    {% for label in labels %}
+                    labels_array[j] = String("{{label}}");
+                    j++;
+                    {% endfor %}
+                    {% for sort in sorts %}
+                    sorts_array[k] = String("{{sort}}");
+                    k++;
+                    {% endfor %}
+
+
+                    var markers_array = []
+                    var infowindows_array = []
+
+
+                    for (let i = 0; i < locations_array.length; i++) {
+
+
+                        new google.maps.places.PlacesService(map).getDetails({
+                            placeId: String(locations_array[i])
+                        }, function (result, status) {
+                            if (status != google.maps.places.PlacesServiceStatus.OK) {
+                                alert(status);
+                                return;
+                            }
+                            console.log(result);
+                            var marker = new google.maps.Marker({
+                                map: map,
+                                place: {
+                                    placeId: String(locations_array[i]),
+                                    location: result.geometry.location
+                                }
+                            });
+                            markers_array[i] = marker;
+                            infowindows_array[i] = new google.maps.InfoWindow();
+
+
+
+                            console.log(result.geometry.location.toUrlValue(6));
+                            map.setCenter(result.geometry.location);
+                            var address = result.adr_address;
+                            var newAddr = address.split("</span>,");
+
+                            infoWindow.setContent("Problem at time 1");
+                            google.maps.event.addListener(infoWindow, 'domready', function () {
+                                map.setCenter(marker.getPosition());
+                            });
+                            for (let i = 0; i < markers_array.length; i++) {
+                                infowindows_array[i].setContent("<p style='text-align:center;'>" + String(labels_array[i]) + "<br />" + sorts_array[i] + "</p>");
+                                infowindows_array[i].open(map, markers_array[i]);
+                            }
+
+                        });
+                    }
+
+
+
+
+
+                } else {
+                    //delete route from map 
+                    directionsDisplay.setDirections({ routes: [] });
+
+                    //center map in spain 
+                    map.setCenter(myLatLng);
+
+                    //show error message 
+                    output.innerHTML = "<div class='alert-danger'> Could not retrieve driving distance. </div>";
+                }
+            });
+        }
+
+        //create autocomplete object for all inputs (from et to), like that you begin to write something and you just have to click on the good one
+        var options = {
+            types: ['(cities)']
+        }
+
+
+        
+
+
+    calcRoute();
+
+
+    </script>
+
+</body>
+
+</html>

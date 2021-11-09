@@ -1,0 +1,100 @@
+<!doctype html>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<ul class=flashes>
+	{% for message in messages %}
+	<script>alert('Rating taken into account !');</script>
+	{% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+<head>
+	<title>Transporteasy</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<!-- VENDOR CSS -->
+	<link rel="stylesheet" href="static/assets/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="static/assets/vendor/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="static/assets/vendor/linearicons/style.css">
+	<link rel="stylesheet" href="static/assets/vendor/chartist/css/chartist-custom.css">
+	<!-- MAIN CSS -->
+	<link rel="stylesheet" href="static/assets/css/main.css">
+	<link rel="stylesheet" href="static/assets/css/demo.css">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+	<!-- ICONS -->
+	<link rel="apple-touch-icon" sizes="76x76" href="static/assets/img/apple-icon.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="static/assets/img/favicon.png">
+</head>
+
+<body>
+	<!-- WRAPPER -->
+	<div id="wrapper">
+
+		<!-- NAVBAR -->
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+				<div id="navbar-menu">
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<br>
+								<i class="lnr lnr-thumbs-up"></i>
+								<span>You like Transporteasy ? Tell your friends ! The more we are the better.</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<br>
+		</nav>
+
+		
+    <!-- LEFT SIDEBAR-->
+		<div id="sidebar-nav" class="sidebar">
+			<div class="sidebar-scroll">
+				<nav>
+					<ul class="nav">
+						<li><a href="/" class=""><i class="lnr lnr-map"></i> <span>Maps</span></a></li>
+						<li><a href="/report" class=""><i class="lnr lnr-warning"></i> <span>Create a report</span></a></li>
+						<li><a href="/profile" class=""><i class="lnr lnr-user"></i> <span>My profile</span></a></li>
+						<li><a href="/rating" class=""><i class="lnr lnr-star"></i> <span>Rate my trip</span></a></li>
+
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<!--END LEFT SIDEBAR -->
+
+
+	<!-- MAIN CONTENT -->
+    <div class="main">		
+	<div class="main-content">
+		<form action="{{ url_for('rating') }}" method="post">
+			<h1><center>How was your trip ?</center></h1>
+			<br>
+			<div class="form-group" id="rating-ability-wrapper">
+				<center>
+				<input id="1star" type="radio" name="rating" value="1" required><i class="fa fa-star fa-lg text-warning" aria-hidden="true"></i><br>
+				<input id="2star" type="radio" name="rating" value="2" required><i class="fa fa-star fa-lg text-warning" aria-hidden="true"></i><i class="fa fa-star fa-lg text-warning" aria-hidden="true"></i><br/>
+				<input id="3star" type="radio" name="rating" value="3" required><i class="fa fa-star fa-lg text-warning" aria-hidden="true"></i><i class="fa fa-star fa-lg text-warning" aria-hidden="true"></i><i class="fa fa-star fa-lg text-warning" aria-hidden="true"></i><br/>
+				<input id="4star" type="radio" name="rating" value="4" required><i class="fa fa-star fa-lg text-warning" aria-hidden="true"></i><i class="fa fa-star fa-lg text-warning" aria-hidden="true"></i><i class="fa fa-star fa-lg text-warning" aria-hidden="true"></i><i class="fa fa-star fa-lg text-warning" aria-hidden="true"></i><br/>
+				<input id="5star" type="radio" name="rating" value="5" required><i class="fa fa-star fa-lg text-warning" aria-hidden="true"></i><i class="fa fa-star fa-lg text-warning" aria-hidden="true"></i><i class="fa fa-star fa-lg text-warning" aria-hidden="true"></i><i class="fa fa-star fa-lg text-warning" aria-hidden="true"></i><i class="fa fa-star fa-lg text-warning" aria-hidden="true"></i><br/>
+				<br>
+				<input id="submit" type="submit" value="Submit">
+				<br>
+				<br>
+				<h4>The grade goes from 1 to 5. The <strong>higher</strong> the grade, the <strong>better</strong> was your trip.<br><br></h4>
+				<h4><u>As an indication</u>: The score of 1 means that the trip was unpleasant, that you encountered very serious problems.<br>
+				The score of 5 means that the ride went exactly as you imagined, without any problems.</h4>
+				<br><br><br>
+				<h2>Actual average rate of line M2 : <strong>{{new_rate}}</strong></h2>
+				<br><br><br>
+
+				<h5>This feature is under construction..</h5>
+				</center>
+			</div>
+		</form>
+	<br>
+	</div>
+	</div>
+	</body>
