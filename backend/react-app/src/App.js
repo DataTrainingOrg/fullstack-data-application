@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+//import Webpages from './webpage';
 
 function App() {
   return (
@@ -36,5 +37,13 @@ function App() {
     </div>
   );
 }
+
+/*function Apps() {
+  return (
+    <div>
+      <Webpages />
+    </div>
+  );
+}*/
 
 export default App;
