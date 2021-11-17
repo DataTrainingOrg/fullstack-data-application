@@ -4,16 +4,16 @@ import {
   useRoutes,
 } from "react-router-dom";
 
-import MyBooks from './webpages/mybooks';
+import PrincipalPage from './webpages/pageprincipale';
 import Favorites from './webpages/favorites';
 import Home from './webpages/home';
 
 
 const App = () => {
   let routes = useRoutes([
-    { path: "/", element: <Home /> },
+    { path: "/", element: <PrincipalPage /> },
     { path: "/favorites", element: <Favorites /> },
-    { path: "/mybooks", element: <MyBooks /> },
+    { path: "/home", element: <Home /> },
   ]);
   return routes;
 };
