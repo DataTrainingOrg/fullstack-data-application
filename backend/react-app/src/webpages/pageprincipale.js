@@ -11,8 +11,8 @@ const PrincipalPage = () => {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Cette application a pour objectif de fluidifier la prise en charge de patients dans les hopitaux. Chaque patient doit remplir un formulaire (E112) dès son arrivée aux urgences.
-          Ce formulaire peut être virtuel et utiliser une auto-complétion pour faciliter la prise en charge et les soins des patients.
+          Cette application a pour objectif de fluidifier la prise en charge de patients dans les hopitaux. Chaque patient doit remplir un formulaire dès son arrivée aux urgences (par exemple le E112 disponible ci-après).
+          Ce formulaire peut être virtuel et utiliser les informations qui n'auraient pas changé d'une hospitalisation à l'autre pour faciliter la prise en charge et les soins des patients.
         </p>
         <p>
           Il existe un formulaire (trouvable et remplissable sur internet) qui regroupe différentes prises en charge. Cependant, ce formulaire n'est pas optimisé, et ne prodigue aucune auto-complétion.
