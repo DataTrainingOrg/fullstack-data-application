@@ -11,8 +11,6 @@ class Signup extends Component {
           <label for="name">Enter your name: </label>
           <input type="text" id="name" /><br/><br/>
 
-
-
           <label for="age">Enter your age: </label>
           <input type="number" id="age" min='1'/><br/><br/>
 
@@ -23,7 +21,7 @@ class Signup extends Component {
          <input type = "text" name = "city" placeholder = "city" /><br/>
 
          <label for = "addr">addr</label><br/>
-         <textarea name = "addr" placeholder = "addr"></textarea><br/>
+         <input name = "addr" placeholder = "addr"></input><br/>
 
          <label for = "PIN">numéro de sécu</label><br/>
          <input type = "text" name = "pin" placeholder = "pin" /><br/>

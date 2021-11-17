@@ -24,8 +24,7 @@ const PrincipalPage = () => {
           rel="noopener noreferrer"
         >
           Voir à quoi ressemble ce formulaire, version papier
-        </a>
-        <p></p>
+        </a><br/>
         <a
           className="App-link"
           href="/signup"
