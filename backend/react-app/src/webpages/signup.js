@@ -1,36 +1,41 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+import React, { Component } from 'react'
+import './App.css';
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:psw@localhost/test_json'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-db = SQLAlchemy(app)
+class Signup extends Component {
+ 
+  render() {
+    return (
+      <form>
+        <fieldset>
 
-class Users(db.Model):
-    __tablename__ = 'users'
-    user_id = db.Column(db.Integer, primary_key=True)
-    user_info = db.Column(db.PickleType)
-
-    def __repr__(self):
-        return self.user_info
+          <label for="name">Enter your name: </label>
+          <input type="text" id="name" /><br/><br/>
 
 
-class Students(db.Model):
-    __tablename__ = 'students'
-    student_id = db.Column(db.Integer, primary_key=True)
-    student_name = db.Column(db.String(80), unique=True)
-    student_age = db.Column(db.Integer)
-    student_sex = db.Column(db.String(20))
 
-    def to_json(self):
-        json_student = {
-            'student_id': self.student_id,
-            'student_name': self.student_name,
-            'student_sex': self.student_sex,
-            'student_age': self.student_age
-        }
+          <label for="age">Enter your age: </label>
+          <input type="number" id="age" min='1'/><br/><br/>
 
-        return json_student
+         <label for = "email">email</label><br/>
+         <input type = "text" name = "email" placeholder = "email" /><br/>
 
-    def __repr__(self):
-        return '%r' % self.student_id
+         <label for = "city">city</label><br/>
+         <input type = "text" name = "city" placeholder = "city" /><br/>
+
+         <label for = "addr">addr</label><br/>
+         <textarea name = "addr" placeholder = "addr"></textarea><br/>
+
+         <label for = "PIN">numéro de sécu</label><br/>
+         <input type = "text" name = "pin" placeholder = "pin" /><br/>
+
+         <label for = "PIN">mot de passe</label><br/>
+         <input type = "text" name = "pin" placeholder = "pin" /><br/>
+
+         <input type = "submit" value = "Submit" />
+
+        </fieldset>
+      </form>
+    )
+  }
+}
+export default Signup

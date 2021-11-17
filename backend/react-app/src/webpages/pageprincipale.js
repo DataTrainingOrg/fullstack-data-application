@@ -28,7 +28,7 @@ const PrincipalPage = () => {
         <p></p>
         <a
           className="App-link"
-          href="/signin"
+          href="/signup"
           target="_blank"
           rel="noopener noreferrer"
         >
