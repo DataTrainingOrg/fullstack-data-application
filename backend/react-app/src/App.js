@@ -5,14 +5,14 @@ import {
 } from "react-router-dom";
 
 import PrincipalPage from './webpages/pageprincipale';
-import Favorites from './webpages/favorites';
+import Signup from './webpages/signup';
 import Home from './webpages/home';
 
 
 const App = () => {
   let routes = useRoutes([
     { path: "/", element: <PrincipalPage /> },
-    { path: "/favorites", element: <Favorites /> },
+    { path: "/signup", element: <Signup /> },
     { path: "/home", element: <Home /> },
   ]);
   return routes;
