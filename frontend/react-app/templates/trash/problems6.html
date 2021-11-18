@@ -1,0 +1,90 @@
+<script>
+    var map;
+    var infoWindow;
+    var service;
+
+
+    function initialize() {
+        var mapOptions = {
+            zoom: 12,
+            center: new google.maps.LatLng(45.474270, 9.177387),
+            styles: [{
+                featureType: "poi",
+                elementType: "labels",
+                stylers: [{
+                    visibility: "off"
+                }]
+            }]
+        };
+        map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+        infoWindow = new google.maps.InfoWindow();
+
+        let locations_array = []
+        let labels_array = []
+
+        let i=0;
+        let j = 0;
+        //locations_array[i] = String("{{locations[index]}}")
+        {% for loc in locations %}
+        locations_array[i] = String("{{loc}}");
+        i++;
+        {% endfor %}
+
+        {% for label in labels %}
+        labels_array[j] = String("{{label}}");
+        j++;
+        {% endfor %}
+
+
+        var markers_array = []
+        var infowindows_array = []
+
+
+        for (let i = 0; i < locations_array.length; i++) {
+
+
+            new google.maps.places.PlacesService(map).getDetails({
+                placeId: String(locations_array[i])
+            }, function (result, status) {
+                if (status != google.maps.places.PlacesServiceStatus.OK) {
+                    alert(status);
+                    return;
+                }
+                console.log(result);
+                var marker = new google.maps.Marker({
+                    map: map,
+                    place: {
+                        placeId: String(locations_array[i]),
+                        location: result.geometry.location
+                    }
+                });
+                markers_array[i]=marker;
+                infowindows_array[i] = new google.maps.InfoWindow();
+                
+
+
+            console.log(result.geometry.location.toUrlValue(6));
+            map.setCenter(result.geometry.location);
+            var address = result.adr_address;
+            var newAddr = address.split("</span>,");
+
+            infoWindow.setContent("Problem at time 1");
+            google.maps.event.addListener(infoWindow, 'domready', function () {
+                map.setCenter(marker.getPosition());
+            });
+            for (let i = 0; i < markers_array.length; i++) {
+                infowindows_array[i].setContent(String(labels_array[i]));
+                infowindows_array[i].open(map, markers_array[i]);
+            }
+
+        });
+    }
+    }
+
+
+</script>
+
+<div id="map" style="height:100%; width:100%"></div>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_UXU_ltfJQvEIzhQzCkRtFBZ3pL1DFjU&libraries=places&callback=initialize"></script>

@@ -1,0 +1,19 @@
+<form class="form-horizontal" id="form_route" name="form_route" action="{{ url_for('new_route') }}" method="post">
+    <div class="form-group">
+        <label for="from" class="col-xs-2 control label"></label>
+        <div class="col-xs-4">
+            <input type="text" id="from" placeholder="Origin" class="form-control" required>
+
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="to" class="col-xs-2 control label"></label>
+        <div class="col-xs-4">
+            <input type="text" id="to" placeholder="Destination" class="form-control" required>
+        </div>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" id="submit" name="submit" value="validate " type="submit">Sign in
+        !</button>
+</form>
