@@ -7,6 +7,7 @@ class Signin extends Component {
       <form>
         <fieldset>
 
+
          <label for = "email">email</label><br/>
          <input type = "text" name = "email" placeholder = "email" /><br/>
 
@@ -14,6 +15,15 @@ class Signin extends Component {
          <input type = "text" name = "pin" placeholder = "pin" /><br/>
 
          <input type = "submit" value = "Submit" />
+         <br/>
+         <br/>
+
+         <center>
+           <h6> Don't have an account yet ? Sign up ! </h6>
+         <form action="/signup">
+         <input type="submit" value="Signup" />
+         </form>
+         </center>
 
         </fieldset>
       </form>
