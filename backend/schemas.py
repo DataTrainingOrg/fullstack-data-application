@@ -1,42 +1,56 @@
-import datetime as _dt
-
+import datetime as _datetime
 import pydantic as _pydantic
 
 
-class _UserBase(_pydantic.BaseModel):
+class _PatientBase(_pydantic.BaseModel):
     email: str
 
 
-class UserCreate(_UserBase):
-    hashed_password: str
+class PatientCreate(_PatientBase):
+    password: str
 
     class Config:
         orm_mode = True
 
 
-class User(_UserBase):
+class Patient(_PatientBase):
     id: int
 
     class Config:
         orm_mode = True
 
-class _LeadBase(_pydantic.BaseModel):
+
+class _PatientFormBase(_pydantic.BaseModel):
     first_name: str
     last_name: str
+    maiden_name: str
+    #birthdayDate: _datetime.date
+    birthdayDay: int
+    birthdayMonth: int
+    birthdayYear: int
+
     email: str
-    company: str
-    note: str
+
+    numberAddress: int
+    nameAddress: str
+    postalCode: int
+    cityAddress: str
+    countryAddress: str
+
+    secuNumber: int
+
+    hospitalName: str
+    causeHosp: str
 
 
-class LeadCreate(_LeadBase):
+class PatientFormCreate(_PatientFormBase):
     pass
 
 
-class Lead(_LeadBase):
+class PatientForm(_PatientFormBase):
     id: int
-    owner_id: int
-    date_created: _dt.datetime
-    date_last_updated: _dt.datetime
+    patient_id: int
+    dateHosp: _datetime.datetime
 
     class Config:
         orm_mode = True

@@ -1,15 +1,14 @@
 import fastapi as _fastapi
 import fastapi.security as _security
 import jwt as _jwt
-import datetime as _dt
-import sqlalchemy.orm as _orm
-import passlib.hash as _hash
+import sqlalchemy.orm as _sqlorm
+import passlib.hash as _passlibhash
 
 import database as _database, models as _models, schemas as _schemas
 
-oauth2schema = _security.OAuth2PasswordBearer(tokenUrl="/api/token")
+oauth2schema = _security.OAuth2PasswordBearer(tokenUrl="/hospForm/connection")
 
-JWT_SECRET = "myjwtsecret"
+SECRET_PASSWORD = "password"
 
 
 def create_database():
@@ -24,105 +23,121 @@ def get_db():
         db.close()
 
 
-async def get_user_by_email(email: str, db: _orm.Session):
-    return db.query(_models.User).filter(_models.User.email == email).first()
+async def get_patient_by_email(email: str, db: _sqlorm.Session):
+    return db.query(_models.Patient).filter(_models.Patient.email == email).first()
 
 
-async def create_user(user: _schemas.UserCreate, db: _orm.Session):
-    user_obj = _models.User(
-        email=user.email, hashed_password=_hash.bcrypt.hash(user.hashed_password)
+async def create_patient(user: _schemas.PatientCreate, db: _sqlorm.Session):
+    patient_obj = _models.Patient(
+        email=user.email, password=_passlibhash.bcrypt.hash(user.password)
     )
-    db.add(user_obj)
+    db.add(patient_obj)
     db.commit()
-    db.refresh(user_obj)
-    return user_obj
+    db.refresh(patient_obj)
+    return patient_obj
 
 
-async def authenticate_user(email: str, password: str, db: _orm.Session):
-    user = await get_user_by_email(db=db, email=email)
+async def authenticate_patient(email: str, password: str, db: _sqlorm.Session):
+    patient = await get_patient_by_email(db=db, email=email)
 
-    if not user:
+    if not patient:
         return False
 
-    if not user.verify_password(password):
+    if not patient.verify_password(password):
         return False
 
-    return user
+    return patient
 
 
-async def create_token(user: _models.User):
-    user_obj = _schemas.User.from_orm(user)
+async def create_token(patient: _models.Patient):
+    patient_obj = _schemas.Patient.from_orm(patient)
 
-    token = _jwt.encode(user_obj.dict(), JWT_SECRET)
+    token = _jwt.encode(patient_obj.dict(), SECRET_PASSWORD)
 
     return dict(access_token=token, token_type="bearer")
 
 
-async def get_current_user(
-    db: _orm.Session = _fastapi.Depends(get_db),
+async def get_current_patient(
+    db: _sqlorm.Session = _fastapi.Depends(get_db),
     token: str = _fastapi.Depends(oauth2schema),
 ):
     try:
-        payload = _jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
-        user = db.query(_models.User).get(payload["id"])
+        payload = _jwt.decode(token, SECRET_PASSWORD, algorithms=["HS256"])
+        patient = db.query(_models.Patient).get(payload["id"])
     except:
         raise _fastapi.HTTPException(
-            status_code=401, detail="Invalid Email or Password"
+            status_code=401, detail="Votre adresse email ou mot de passe est invalide."
         )
 
-    return _schemas.User.from_orm(user)
+    return _schemas.Patient.from_orm(patient)
 
 
-async def create_lead(user: _schemas.User, db: _orm.Session, lead: _schemas.LeadCreate):
-    lead = _models.Lead(**lead.dict(), owner_id=user.id)
-    db.add(lead)
+async def create_patient_form(patient: _schemas.Patient, db: _sqlorm.Session, patientform: _schemas.PatientFormCreate):
+    patientform = _models.PatientForm(**patientform.dict(), patient_id=patient.id)
+    db.add(patientform)
     db.commit()
-    db.refresh(lead)
-    return _schemas.Lead.from_orm(lead)
+    db.refresh(patientform)
+    return _schemas.PatientForm.from_orm(patientform)
 
 
-async def get_leads(user: _schemas.User, db: _orm.Session):
-    leads = db.query(_models.Lead).filter_by(owner_id=user.id)
+async def get_patient_forms(patient: _schemas.Patient, db: _sqlorm.Session):
+    patient_forms = db.query(_models.PatientForm).filter_by(patient_id=patient.id)
 
-    return list(map(_schemas.Lead.from_orm, leads))
+    return list(map(_schemas.PatientForm.from_orm, patient_forms))
 
 
-async def _lead_selector(lead_id: int, user: _schemas.User, db: _orm.Session):
-    lead = (
-        db.query(_models.Lead)
-        .filter_by(owner_id=user.id)
-        .filter(_models.Lead.id == lead_id)
+async def select_patient_form(patientform_id: int, patient: _schemas.Patient, db: _sqlorm.Session):
+    patient_forms = (
+        db.query(_models.PatientForm)
+        .filter_by(patient_id=patient.id)
+        .filter(_models.PatientForm.id == patientform_id)
         .first()
     )
 
-    if lead is None:
-        raise _fastapi.HTTPException(status_code=404, detail="Lead does not exist")
+    if patient_forms is None:
+        raise _fastapi.HTTPException(status_code=404, detail="Formulaires inexistants")
 
-    return lead
+    return patient_forms
 
 
-async def get_lead(lead_id: int, user: _schemas.User, db: _orm.Session):
-    lead = await _lead_selector(lead_id=lead_id, user=user, db=db)
+async def get_patient_form(patientform_id: int, patient: _schemas.Patient, db: _sqlorm.Session):
+    patient_forms = await select_patient_form(patientform_id=patientform_id, patient=patient, db=db)
 
-    return _schemas.Lead.from_orm(lead)
+    return _schemas.Patient.from_orm(patient_forms)
 
-async def delete_lead(lead_id: int, user: _schemas.User, db: _orm.Session):
-    lead = await _lead_selector(lead_id, user, db)
 
-    db.delete(lead)
+async def delete_patient_form(patientform_id: int, patient: _schemas.Patient, db: _sqlorm.Session):
+    patient_form = await select_patient_form(patientform_id, patient, db)
+
+    db.delete(patient_form)
     db.commit()
 
-async def update_lead(lead_id: int, lead: _schemas.LeadCreate, user: _schemas.User, db: _orm.Session):
-    lead_db = await _lead_selector(lead_id, user, db)
 
-    lead_db.first_name = lead.first_name
-    lead_db.last_name = lead.last_name
-    lead_db.email = lead.email
-    lead_db.company = lead.company
-    lead_db.note = lead.note
-    lead_db.date_last_updated = _dt.datetime.utcnow()
+async def update_patient_form(patientform_id: int, patientform_create: _schemas.PatientFormCreate, patient: _schemas.Patient, db: _sqlorm.Session):
+    patient_form_db = await select_patient_form(patientform_id, patient, db)
 
+    patient_form_db.first_name = patientform_create.first_name
+    patient_form_db.last_name = patientform_create.last_name
+    patient_form_db.maiden_name = patientform_create.maiden_name
+
+    #patient_form_db.birthday_date = patientform_create.birthdayDate
+    patient_form_db.birthday_day = patientform_create.birthdayDay
+    patient_form_db.birthday_month = patientform_create.birthdayMonth
+    patient_form_db.birthday_year = patientform_create.birthdayYear
+
+    patient_form_db.number_address = patientform_create.numberAddress
+    patient_form_db.name_address = patientform_create.nameAddress
+    patient_form_db.code_postal = patientform_create.postalCode
+    patient_form_db.city_address = patientform_create.cityAddress
+    patient_form_db.country_address = patientform_create.countryAddress
+
+    patient_form_db.secu_number = patientform_create.secuNumber
+
+    patient_form_db.name_hospital = patientform_create.hospitalName
+    patient_form_db.cause_hosp = patientform_create.causeHosp
+
+    
     db.commit()
-    db.refresh(lead_db)
+    db.refresh(patient_form_db)
 
-    return _schemas.Lead.from_orm(lead_db)
+    return _schemas.PatientForm.from_orm(patient_form_db)
