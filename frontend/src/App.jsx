@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Header from "./components/Header";
 import Table from "./components/Table";
 import { UserContext } from "./context/UserContext";
+import PrincipalPage from "./components/pageprincipale" 
 
 const App = () => {
   const [message, setMessage] = useState("");
@@ -21,7 +22,7 @@ const App = () => {
     const data = await response.json();
 
     if (!response.ok) {
-      console.log("something messed up");
+      console.log("Quelque chose s'est mal passé");
     } else {
       setMessage(data.message);
     }
@@ -34,19 +35,20 @@ const App = () => {
   return (
     <>
       <Header title={message} />
-      <div className="columns">
         <div className="column"></div>
-        <div className="column m-5 is-two-thirds">
+        
           {!token ? (
+            <div>< PrincipalPage />
             <div className="columns">
               <Register /> <Login />
             </div>
+          </div>
           ) : (
             <Table />
           )}
-        </div>
+        
         <div className="column"></div>
-      </div>
+
     </>
   );
 };

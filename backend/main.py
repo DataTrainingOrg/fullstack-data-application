@@ -90,7 +90,7 @@ async def update_patient_form(
 
 @app.get("/hospForm")
 async def root():
-    return {"message": "Awesome Leads Manager"}
+    return {"message": "Formulaire médicale"}
 
 if __name__ == "__main__":
     uvicorn.run("main:app")
