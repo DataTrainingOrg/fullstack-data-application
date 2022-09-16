@@ -5,8 +5,9 @@ import json
 import asyncio
 import os
 from starlette_exporter import PrometheusMiddleware, handle_metrics
-from .models import BaseSQL, engine
-from . import routers
+from models import BaseSQL, engine
+import routers
+from sqlalchemy import insert
 
 app = FastAPI(
     title="My title",
@@ -46,3 +47,31 @@ async def startup_event():
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
+
+@app.get("/get_table")
+def get_table():
+    with engine.connect() as connection:
+        result = connection.execute("select * from posts")
+        for row in result:
+            print("username:", row['username'])
+
+@app.get("/get_table")
+def get_table():
+    with engine.connect() as connection:
+        result = connection.execute("select * from posts")
+        for row in result:
+            print("username:", row['username'])
+
+# @app.get("/insert_table")
+# def insert_table():
+#     with engine.connect() as conn:
+#         result = conn.execute(
+#             insert("INSERT"),
+#             [
+#                 {"name": "sandy", "fullname": "Sandy Cheeks"},
+#                 {"name": "patrick", "fullname": "Patrick Star"}
+#             ]
+#         )
+#         conn.commit()
+
+
