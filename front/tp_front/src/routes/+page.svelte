@@ -1,5 +1,5 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-<h1 class="text-3xl font-bold underline">
-    Hello world!
-</h1>
+<div class="flex justify-center justify-items-center grid grid-flow-row auto-rows-max p-10">
+    <p>Hello there</p>
+    <a  class="underline" href="https://svelte.dev/tutorial/basics">Link to Svelte tutorial</a>
+    <a  class="underline" href="https://tailwindcss.com/docs/text-color">Link to Tailwind docs</a>
+</div>
