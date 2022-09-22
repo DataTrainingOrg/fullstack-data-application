@@ -1,0 +1,21 @@
+version: '3'
+services:
+  front:
+    build:
+      context: front
+      dockerfile: Dockerfile
+    volumes:
+      - /app/node_modules
+      - ./front:/app
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+  api:
+    build:
+      context: api
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+    volumes:
+      - ./api:/app
