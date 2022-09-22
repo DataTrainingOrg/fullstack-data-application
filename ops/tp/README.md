@@ -1,6 +1,6 @@
 # TP
 
-## Goal
+## Goals
 
 - Complete Docker setup
 - Get familiar with Docker
