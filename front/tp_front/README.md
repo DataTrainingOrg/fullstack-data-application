@@ -3,6 +3,8 @@
 ## Goals
 
 - Get familiar with JavaScript
+- Make API requests using JavaScript frontend
+- Get familiar with CSS styling
 
 ## Before starting
 
@@ -13,6 +15,8 @@
 5. Open `localhost:3000` in your browser
 
 The file to edit is `tp_front/front/src/routes/+page.svelte`.
+
+For more information about how the frontend environment is set up: [Frontend setup](#frontend-setup)
 
 ## Make API requests
 
@@ -50,3 +54,22 @@ Play around with:
 - [font weight](https://tailwindcss.com/docs/font-weight)
 - button [background color](https://tailwindcss.com/docs/background-color)
 - button [border radius](https://tailwindcss.com/docs/border-radius)
+
+## Frontend setup
+
+Steps used for setting up the frontend container.
+
+See [Svelte docs](https://kit.svelte.dev/), [TailwindCSS docs](https://github.com/svelte-add/tailwindcss).
+
+### Install Svelte Kit
+- `npm create svelte@latest front`. Selected features
+    - Project: Skeleton project
+    - TypeScript: no
+    - ESLint linting: yes
+    - Prettier formatting: yes
+    - Playright testing: no
+- `cd front`
+- `npm install`
+
+### Install TailwindCSS
+- `npx svelte-add@latest tailwindcss`
