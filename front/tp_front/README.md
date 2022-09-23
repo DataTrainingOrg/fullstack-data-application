@@ -62,6 +62,7 @@ Steps used for setting up the frontend container.
 See [Svelte docs](https://kit.svelte.dev/), [TailwindCSS docs](https://github.com/svelte-add/tailwindcss).
 
 ### Install Svelte Kit
+
 - `npm create svelte@latest front`. Selected features
     - Project: Skeleton project
     - TypeScript: no
@@ -72,4 +73,5 @@ See [Svelte docs](https://kit.svelte.dev/), [TailwindCSS docs](https://github.co
 - `npm install`
 
 ### Install TailwindCSS
+
 - `npx svelte-add@latest tailwindcss`
