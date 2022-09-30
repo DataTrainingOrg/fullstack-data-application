@@ -29,14 +29,18 @@ Find some example DAGs [here](https://github.com/apache/airflow/tree/main/airflo
 
 Edit `tp_data_pipeline/dags/airflow_intro.py` for the following questions.
 
+When the Python file is saved, the Airflow UI might take some seconds to refresh and see the new version of the file. To check that it is up-to-date, click on `Code` in the DAG page.
+
 1. In the writer function, write the string "1 1 2 3 5 8 13 21" to a file named `/files/numbers.txt`
 2. In the reader function, read and print the content of the file `/files/numbers.txt`
-3. Create a transform task which:
+3. Create a `calculator` task which:
 - receives the content of the reader function
 - calculates the sum of the content numbers
 - prints the result
+- writes the result to a file named `/files/result.txt`
 
 See [XComs docs](https://airflow.apache.org/docs/apache-airflow/stable/concepts/xcoms.html) about communication between tasks.
+
 See this [XComs example](https://github.com/apache/airflow/blob/main/airflow/example_dags/tutorial_dag.py#L69-L85).
 
 ## Interact with a Postgres database (advanced)

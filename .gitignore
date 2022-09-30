@@ -1,4 +1,5 @@
 .DS_Store
+data-pipeline/tp_data_pipeline/logs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
