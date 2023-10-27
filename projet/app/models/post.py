@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.dialects.postgresql import UUID
-from .database import BaseSQL
+from app.models.database import BaseSQL
 
 
 class Post(BaseSQL):

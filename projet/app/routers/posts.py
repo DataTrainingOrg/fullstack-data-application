@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
-from ..services import posts as posts_service
-from .. import schemas, models
+from app.services import posts as posts_service
+from app import schemas, models
 from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/posts")

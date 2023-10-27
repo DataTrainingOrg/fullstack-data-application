@@ -5,8 +5,8 @@ import json
 import asyncio
 import os
 from starlette_exporter import PrometheusMiddleware, handle_metrics
-from .models import BaseSQL, engine
-from . import routers
+from app.models import BaseSQL, engine
+from app import routers
 
 app = FastAPI(
     title="My title",
@@ -38,10 +38,6 @@ app.add_route("/metrics", handle_metrics)
 async def startup_event():
     BaseSQL.metadata.create_all(bind=engine)
 
-@app.get("/api/headers")
-def read_hello(request: Request, x_userinfo: Optional[str] = Header(None, convert_underscores=True), ):
-    print(request["headers"])
-    return {"Headers": json.loads(base64.b64decode(x_userinfo))}
 
 @app.get("/")
 def read_root():
