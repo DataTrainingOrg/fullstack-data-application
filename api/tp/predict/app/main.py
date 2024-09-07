@@ -1,6 +1,6 @@
 from fastapi import FastAPI, BackgroundTasks
 import pathlib
-import glob 
+import glob
 from joblib import load, dump
 from schema import IrisPredict, IrisTrain
 import numpy as np
@@ -14,16 +14,17 @@ app = FastAPI(
     version="0.0.1",
 )
 
-global  clf
+global clf
 
-CLASSES = ['setosa', 'versicolor', 'virginica']
+CLASSES = ["setosa", "versicolor", "virginica"]
+
 
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
 
 
-@app.on_event('startup')
+@app.on_event("startup")
 async def load_model():
     global clf
     all_model_paths = glob.glob("./data/iris_*")
@@ -34,10 +35,11 @@ async def load_model():
 @app.post("/iris/predict")
 async def predict_iris(iris: IrisPredict):
     return {
-        "predicted_classes" : clf.predict(np.asarray([iris.data])).tolist(),
-        "predicted_probas" : clf.predict_proba(np.asarray([iris.data])).tolist(), 
-        "classes" : CLASSES
+        "predicted_classes": clf.predict(np.asarray([iris.data])).tolist(),
+        "predicted_probas": clf.predict_proba(np.asarray([iris.data])).tolist(),
+        "classes": CLASSES,
     }
+
 
 def retrain_model(X, y):
     logreg = LogisticRegression()
@@ -52,7 +54,7 @@ async def train_iris_model(iris: IrisTrain, background_tasks: BackgroundTasks):
     background_tasks.add_task(retrain_model, X=X, y=y)
     return {"message": "Notification sent in the background"}
 
+
 @app.get("/iris/classes")
 async def create_post(iris: IrisPredict):
     return CLASSES
-

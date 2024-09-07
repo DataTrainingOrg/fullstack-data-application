@@ -25,8 +25,9 @@ async def get_posts_by_title(title: str = None, db: Session = Depends(models.get
 
 
 @router.put("/{post_id}", tags=["posts"])
-async def update_post_by_id(post_id: str, post: schemas.Post,
-                            db: Session = Depends(models.get_db)):
+async def update_post_by_id(
+    post_id: str, post: schemas.Post, db: Session = Depends(models.get_db)
+):
     return posts_service.update_post(post_id=post_id, db=db, post=post)
 
 

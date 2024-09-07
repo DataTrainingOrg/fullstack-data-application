@@ -16,7 +16,7 @@ def get_all_posts(db: Session, skip: int = 0, limit: int = 10) -> List[models.Po
 def get_post_by_id(post_id: str, db: Session) -> models.Post:
     record = db.query(models.Post).filter(models.Post.id == post_id).first()
     if not record:
-        raise HTTPException(status_code=404, detail="Not Found") 
+        raise HTTPException(status_code=404, detail="Not Found")
     record.id = str(record.id)
     return record
 
