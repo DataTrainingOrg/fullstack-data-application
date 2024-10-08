@@ -112,6 +112,12 @@ user_posts = user.posts
 Dans cette section, nous allons voir comment mettre en place un système d'authentification basique avec FastAPI.
 A partir d'un login classique avec username et mot de passe, nous allons générer un Token JWT (JSON Web Token)
 qui sera ensuite utilisé pour s'authentifier sur nos endpoints qui seront configurés en conséquence.
+Chaque endpoint qui attend une authentification acceptera un header `Authorization`. La valeur de ce header commencera par le mot `Bearer` suivi du token.
+
+```
+Authorization: Bearer <xxx>
+```
+
 
 ## JWT Token
 
@@ -196,11 +202,13 @@ async def get_post_by_id(post_id: str, request: Request, db: Session = Depends(m
 
 Pour une simple authentification, FastAPI nous fournit une dépendance `HTTPBearer` qui va nous permettre de vérifier la présence d'un token dans le header `Authorization`.
 Vous verrez apparaitre un petit cadenas à côté de l'endpoint pour indiquer qu'il est sécurisé.
+
 ![img.png](img.png)
 
 Pour s'authentifier, il suffit de générer un token et de l'envoyer dans le header `Authorization` de la requête HTTP.
 La documentation de l'API vous offre un bouton pour tester l'endpoint avec un token.
 En cliquant sur le cadenas, vous verrez une fenêtre s'ouvrir pour vous permettre de rentrer un token.
+
 ![img_1.png](img_1.png)
 
 Il nous faut désormais décoder ce token pour vérifier l'identité de l'utilisateur.
