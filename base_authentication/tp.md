@@ -14,4 +14,9 @@ l'authentification de manière automatique pour un endpoint.
 ## Troisième partie
 
 Ecrivez une fonction qui récupère l'ID du user à partir du token JWT. 
-En entrant dans la fonction, le programme devra avoir valider le token et avoir l'ID de l'utilisateur à disposition
+En entrant dans la fonction de l'endpoint, le programme devra avoir valider le token et avoir l'ID de l'utilisateur à disposition
+
+## Quatrième partie 
+
+A l'aide de la librairie `requests`, écrivez un script python pour effectuer une requête vers un de vos endpoint sécurisé.
+
