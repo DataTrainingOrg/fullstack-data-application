@@ -10,6 +10,7 @@ app = Flask(__name__)
 #         return response
 #     return dict(request_api=request_api)
 
-@app.route('/')
+
+@app.route("/")
 def hello():
-    return render_template('./index.html')
+    return render_template("./index.html")

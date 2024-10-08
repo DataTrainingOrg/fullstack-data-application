@@ -6,7 +6,7 @@
 
 Pour commencer :
 
-## [Docker](docker/DOCKER.md)
+## [Docker](ops/cours/OPS_COURS.md)
 
 Pour l'ensemble des parties du cours
 

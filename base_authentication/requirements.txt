@@ -3,3 +3,5 @@ sqlalchemy
 pydantic
 psycopg2
 python-slugify
+pyjwt
+fastapi

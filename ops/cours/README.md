@@ -1,6 +1,7 @@
 # Docker
 
 - [Docker](#docker)
+  - [Terminology](#terminology)
   - [Install Docker Desktop](#install-docker-desktop)
   - [Build an image](#build-an-image)
   - [Launch a container](#launch-a-container)
@@ -13,6 +14,35 @@
   - [Multi-stage builds](#multi-stage-builds)
   - [Docker registry](#docker-registry)
   - [Développer depuis un conteneur](#développer-depuis-un-conteneur)
+
+## Terminology
+
+### Image
+
+An image is a read-only template with instructions for creating a Docker container. 
+Often, an image is based on another image, with some additional customization.
+It contains all the libraries, dependencies, and files that the container needs to run. 
+An image is shareable and portable, so you can deploy the same image in multiple locations at once—much like a software binary file. 
+
+### Container
+
+A container is a runnable instance of an image. 
+You can create, start, stop, move, or delete a container using the Docker API or CLI.
+
+### Registry
+
+A registry is a collection of repositories, and a repository is a collection of images—sort of like a GitHub repository, but for Docker images.
+
+### Tag
+
+A tag is a label applied to a Docker image in a repository.
+Tags are used to specify different versions of the same image, for example, `latest`, `v1`, `v2`.
+
+### Volume
+
+A volume is a persistent data storage mechanism that allows data to exist beyond the lifetime of the container.
+Volumes are used to share data between the host and the container, and between containers.
+
 
 ## Install Docker Desktop
 
@@ -38,9 +68,20 @@ COPY . .
 CMD [ "python3", "-m" , "flask", "--debug", "run", "--host=0.0.0.0" ]
 ```
 
-Build image
+Build image: 
+
+By default, Docker will look for a file named `Dockerfile` in the directory designated by the `context` argument (the last one specified).
+
 ```
 docker build -t image_name  .
+```
+
+This command will build an image named `image_name` from the file named `Dockerfile` in the current directory (`context` arg is .) .
+
+To build an image from a specific Dockerfile, use the `-f` flag.
+
+```
+docker build -t image_name -f dockerfiles/other_Dockerfile whatever_folder/
 ```
 
 
@@ -101,6 +142,27 @@ Exit with `CTRL-D`
 
 ## Docker Compose
 
+Docker compose is a tool for defining and running multi-container Docker applications. You can see it as a shortcut of the `docker run` command.
+You can also give instructions to build a container.
+With a single command you can create and start all the services from your configuration.
+
+Docker compose is based on a yaml file named by default docker-compose.yml.
+
+
+```docker-compose.yaml
+version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+  redis:
+    image: "redis:alpine"
+```
+
+
+### Commands
+
 Launch containers
 ```
 docker-compose up
@@ -109,7 +171,7 @@ Launch containers and force rebuild
 ```
 docker-compose up --build
 ```
-Launch containers in detached mode
+Launch containers in detached mode (background)
 ```
 docker-compose up -d
 ```
