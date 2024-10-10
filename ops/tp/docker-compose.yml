@@ -15,4 +15,6 @@ services:
       context: front
       dockerfile: Dockerfile
     ports:
-        - "8080:8080"
+      - "8080:8080"
+    volumes:
+        - ./front:/app

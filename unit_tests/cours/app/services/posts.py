@@ -3,7 +3,7 @@ from typing import List
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from datetime import datetime
-import models, schemas
+from .. import models, schemas
 
 
 def get_all_posts(db: Session, skip: int = 0, limit: int = 10) -> List[models.Post]:

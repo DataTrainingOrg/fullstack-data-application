@@ -1,4 +1,3 @@
-import base64
 from typing import Optional
 from fastapi import FastAPI, Header
 from fastapi.middleware.cors import CORSMiddleware
@@ -31,7 +30,7 @@ app.add_middleware(
 )
 
 app.include_router(routers.PostRouter)
-#app.include_router(routers.HealthRouter)
+app.include_router(routers.HealthRouter)
 
 app.add_middleware(PrometheusMiddleware)
 app.add_route("/metrics", handle_metrics)
@@ -48,8 +47,7 @@ def read_hello(
     x_userinfo: Optional[str] = Header(None, convert_underscores=True),
 ):
     print(request["headers"])
-    b64 = base64.b64decode(x_userinfo.encode("utf-8"))
-    return {"Headers": request["headers"]}
+    return {"Headers": json.loads(base64.b64decode(x_userinfo))}
 
 
 @app.get("/")

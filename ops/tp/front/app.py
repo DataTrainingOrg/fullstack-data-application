@@ -3,12 +3,14 @@ import requests
 
 app = Flask(__name__)
 
-# @app.context_processor
-# def utility_processor():
-#     def request_api(url=API_URL):
-#         response = requests.get(f"http://{url}").text
-#         return response
-#     return dict(request_api=request_api)
+API_URL = "api:5001"
+
+@app.context_processor
+def utility_processor():
+    def request_api(url=API_URL):
+        response = requests.get(f"http://{url}").text
+        return response
+    return dict(request_api=request_api)
 
 
 @app.route("/")
