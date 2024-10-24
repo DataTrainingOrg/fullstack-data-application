@@ -1,5 +1,3 @@
-from fastapi.openapi.models import HTTPBearerfrom http.client import HTTPExceptionfrom routers.posts import security
-
 # Notions abordées dans ce chapitre
 
 - Notion de clé étrangère (foreign key) dans une base de données ainsi qui sont implémentation en FastAPI

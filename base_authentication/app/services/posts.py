@@ -58,11 +58,9 @@ def delete_all_posts(db: Session) -> List[models.Post]:
     return records
 
 
-def create_post(db: Session, post: schemas.Post) -> models.Post:
-    record = db.query(models.Post).filter(models.Post.id == post.id).first()
-    if record:
-        raise HTTPException(status_code=409, detail="Already exists")
+def create_post(db: Session, user_id: str, post: schemas.Post) -> models.Post:
     db_post = models.Post(**post.dict())
+    db_post.user_id = user_id
     db.add(db_post)
     db.commit()
     db.refresh(db_post)
